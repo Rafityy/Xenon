@@ -1,0 +1,124 @@
+{
+    "name": "Cloud API Service",
+    "get": {
+        "verb": "GET",
+        "uris": [
+            "/api/v2/data/resources",
+            "/api/v2/metrics/system"
+        ],
+        "client": {
+            "headers": {
+                "Accept": "application/json",
+                "Accept-Encoding": "gzip, deflate",
+                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+                "Connection": "keep-alive",
+                "User-Agent": "ApiClient/1.0.15 (NodeJS/14.17; Linux x64)"
+            },
+            "parameters": null,
+            "message": {
+                "location": "query",
+                "name": "filter"
+            },
+            "transforms": [
+                {
+                    "action": "base64url",
+                    "value": ""
+                }
+            ]
+        },
+        "server": {
+            "headers": {
+                "Content-Type": "application/json; charset=utf-8",
+                "Server": "nginx/1.21.6",
+                "X-RateLimit-Limit": "100",
+                "X-RateLimit-Remaining": "99",
+                "Cache-Control": "no-cache, no-store, must-revalidate"
+            },
+            "transforms": [
+                {
+                    "action": "xor",
+                    "value": "apiServerKey"
+                },
+                {
+                    "action": "base64",
+                    "value": ""
+                },
+                {
+                    "action": "prepend",
+                    "value": "{\"data\":{\"resources\":"
+                },
+                {
+                    "action": "append",
+                    "value": "},\"meta\":{\"total\":42,\"page\":1,\"limit\":10}}"
+                }
+            ]
+        }
+    },
+    "post": {
+        "verb": "POST",
+        "uris": [
+            "/api/v2/data/upload",
+            "/api/v2/events/log"
+        ],
+        "client": {
+            "headers": {
+                "Accept": "application/json",
+                "Accept-Encoding": "gzip, deflate",
+                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+                "Connection": "keep-alive",
+                "Content-Type": "application/json",
+                "User-Agent": "ApiClient/1.0.15 (NodeJS/14.17; Linux x64)"
+            },
+            "parameters": null,
+            "message": {
+                "location": "body",
+                "name": ""
+            },
+            "transforms": [
+                {
+                    "action": "xor",
+                    "value": "clientPostKey"
+                },
+                {
+                    "action": "base64",
+                    "value": ""
+                },
+                {
+                    "action": "prepend",
+                    "value": "{\"payload\":"
+                },
+                {
+                    "action": "append",
+                    "value": ",\"timestamp\":\"2025-03-09T12:34:56Z\"}"
+                }
+            ]
+        },
+        "server": {
+            "headers": {
+                "Content-Type": "application/json; charset=utf-8",
+                "Server": "nginx/1.21.6",
+                "X-RateLimit-Limit": "100",
+                "X-RateLimit-Remaining": "98",
+                "Cache-Control": "no-cache, no-store, must-revalidate"
+            },
+            "transforms": [
+                {
+                    "action": "xor",
+                    "value": "serverResponseKey"
+                },
+                {
+                    "action": "base64",
+                    "value": ""
+                },
+                {
+                    "action": "prepend",
+                    "value": "{\"status\":\"success\",\"id\":\"ops-"
+                },
+                {
+                    "action": "append",
+                    "value": "\",\"processedAt\":\"2025-03-09T12:34:57Z\"}"
+                }
+            ]
+        }
+    }
+}
