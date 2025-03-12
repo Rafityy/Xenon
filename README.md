@@ -239,6 +239,7 @@ If you have suggestions/requests open an issue or you can message me on discord.
 
 I referenced and copied code from a bunch of different projects in the making of this project. If I directly copied code or only made slight modifications, I tried to add detailed references in the comments. Hopefully I didn't miss anything and piss someone off. 
 
+- https://github.com/Red-Team-SNCF/ceos
 - https://github.com/MythicAgents/Apollo
 - https://github.com/MythicAgents/Athena
 - https://github.com/kyxiaxiang/Beacon_Source
