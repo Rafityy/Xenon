@@ -55,6 +55,7 @@ Xenon makes no claims about evasion. In fact it is not OPSEC safe. There are man
 | `inline_execute` | `inline_execute -BOF [COFF.o] [-Arguments [optional arguments]]` | Execute a Beacon Object File in the current process thread. **Warning:** Incorrect argument types can crash the Agent process. |
 | `download`     | `download -path <file path>`                           | Download a file off the target system (supports UNC path). |
 | `upload`       | `upload (modal)`                                            | Upload a file to the target machine by selecting a file from your computer. |
+| `status`         | `status`                                              | List C2 connection hosts and their status. |
 | `exit`         | `exit`                                              | Task the implant to exit. |
 
 ---
