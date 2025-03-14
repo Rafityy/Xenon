@@ -5,7 +5,7 @@
 #include "Task.h"
 #include "Config.h"
 
-#ifdef INCLUDE_CMD_CP
+#ifdef INCLUDE_CMD_CD
 VOID FileSystemCd(PCHAR taskUuid, PPARSER arguments)
 {
     // Get command arguments for filepath
