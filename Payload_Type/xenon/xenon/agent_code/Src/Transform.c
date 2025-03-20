@@ -365,6 +365,7 @@ BOOL TransformReverse(char* recoverable, DWORD recoverableLength, SIZE_T* recove
     {
         switch (step)
         {
+        case TRANSFORM_BASE64URL:
         case TRANSFORM_BASE64:
         {
             //_dbg("[TRANSFORM_BASE64] Reversing...");
@@ -386,28 +387,28 @@ BOOL TransformReverse(char* recoverable, DWORD recoverableLength, SIZE_T* recove
             memcpy(recoverable, temp, recoverableLength);
             break;
         }
-        case TRANSFORM_BASE64URL:
-        {
-            //_dbg("[TRANSFORM_BASE64URL] Reversing...");
+        // case TRANSFORM_BASE64URL:
+        // {
+        //     //_dbg("[TRANSFORM_BASE64URL] Reversing...");
 
-            recoverable[recoverableLength] = 0;
+        //     recoverable[recoverableLength] = 0;
             
-            outlen = maxGet;
+        //     outlen = maxGet;
 
-            if (base64url_decode((const char*)recoverable, recoverableLength, temp, &outlen) != 0) {
-                _err("base64url_decode failed. ERROR : %d", GetLastError());
-                return FALSE;
-            }
+        //     if (base64url_decode((const char*)recoverable, recoverableLength, temp, &outlen) != 0) {
+        //         _err("base64url_decode failed. ERROR : %d", GetLastError());
+        //         return FALSE;
+        //     }
 
-            recoverableLength = outlen;
+        //     recoverableLength = outlen;
 
-            if (recoverableLength == 0)
-					return FALSE;
+        //     if (recoverableLength == 0)
+		// 			return FALSE;
 
-            memcpy(recoverable, temp, recoverableLength);
-            break;
+        //     memcpy(recoverable, temp, recoverableLength);
+        //     break;
 
-        }
+        // }
         case TRANSFORM_XOR:
         {
             //_dbg("[TRANSFORM_XOR] Reversing...");
