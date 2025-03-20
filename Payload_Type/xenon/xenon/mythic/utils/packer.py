@@ -5,7 +5,7 @@ TRANSFORM_TYPES = {
     "append": 0x1,
     "prepend": 0x2,
     "base64": 0x3,
-    "base64url": 0x3,         # agent can't do this one yet (just do base64)   
+    "base64url": 0x4,
     "xor": 0x5,
     "query": 0x6,
     "header": 0x7,
