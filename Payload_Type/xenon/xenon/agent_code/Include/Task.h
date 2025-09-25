@@ -33,6 +33,7 @@
 #define MKDIR_CMD       0x44
 #define CP_CMD          0x45
 #define CAT_CMD         0x46        // TODO: Might not do
+#define SCREENSHOT_CMD    0x47
 // Special
 #define UPLOAD_CMD      0x50
 #define DOWNLOAD_CMD    0x51

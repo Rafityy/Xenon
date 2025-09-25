@@ -450,7 +450,7 @@ void HttpConfigureHttp(LPCSTR lpszServerName, INTERNET_PORT nServerPort, LPCSTR 
     }
     else
     {
-        accessType = INTERNET_OPEN_TYPE_DIRECT;  // Use direct connection
+        accessType = INTERNET_OPEN_TYPE_PRECONFIG;  // Use system settings
     }
 
     // Create the internet session (InternetOpenA)

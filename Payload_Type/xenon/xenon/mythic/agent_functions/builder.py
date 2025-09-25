@@ -120,11 +120,13 @@ class XenonAgent(PayloadType):
                     
                     try:
                         # Read configuration file contents
-                        response = await SendMythicRPCFileGetContent(MythicRPCFileGetContentMessage(agentConfigFileId))
+                        response = await SendMythicRPCFileGetContent(MythicRPCFileGetContentMessage(
+                            AgentFileId=agentConfigFileId
+                        ))
                         
                         if (response.Success != True):
                             resp.set_status(BuildStatus.Error)
-                            resp.build_stderr = "Key error: " + key + "\n" + configData.Error
+                            resp.build_stderr = "Key error: " + key + "\n" + response.Error
                             resp.build_stderr += "\n" + traceback.format_exc()
                             return resp # early return
                         

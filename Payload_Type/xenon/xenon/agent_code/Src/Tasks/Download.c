@@ -43,6 +43,7 @@ DWORD DownloadInit(_In_ PCHAR taskUuid, _Inout_ FILE_DOWNLOAD* download)
     PackageAddInt32(data, download->totalChunks);
     PackageAddString(data, download->filepath, TRUE);
     PackageAddInt32(data, CHUNK_SIZE);
+    PackageAddByte(data, 0); // is_screenshot = False
 
     // Send package
     PARSER Response = { 0 };

@@ -216,6 +216,14 @@ def download_init_to_mythic_format(data):
     chunk_size = int.from_bytes(data[0:4], byteorder='big')
     data = data[4:]
 
+    # Retrieve if screenshot
+    is_screenshot_val = data[0]
+    data = data[1:]
+    if is_screenshot_val == 0:
+        is_screenshot = False
+    else:
+        is_screenshot = True
+
     logging.info(f"chunk_size : {chunk_size}")
 
     response_task = []
@@ -225,7 +233,7 @@ def download_init_to_mythic_format(data):
         "download": {
             "total_chunks": total_chunks,
             "full_path": full_path.decode('cp850'),
-            "is_screenshot": False,     # Agent can ignore this field
+            "is_screenshot": is_screenshot,     # Agent can ignore this field
             "chunk_size": chunk_size
             }
     }
