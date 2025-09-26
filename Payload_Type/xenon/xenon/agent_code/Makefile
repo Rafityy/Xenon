@@ -1,7 +1,7 @@
 # Compiler
 CC = x86_64-w64-mingw32-gcc
 CFLAGS = -Wall -w -s -IInclude
-LFLAGS = -liphlpapi -lnetapi32 -lwininet -lws2_32 -lgdiplus -lole32 -luuid -lgdi32 -luser32
+LFLAGS = -liphlpapi -lnetapi32 -lwininet -lws2_32 -lgdiplus -lole32 -luuid -lgdi32 -luser32 -lwinmm
 DFLAGS = -D_DEBUG
 
 # Directories
